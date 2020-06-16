@@ -7,7 +7,7 @@ class floatationSolver:
         self.fluidDen = float(input("Fluid density (kg/m3): "))
         self.objDen = float(input("Object density (kg/m3): "))
         self.objVol = float(input("Object volume (m3): "))
-        self.objSide = objVol ** 1/3
+        self.objSide = self.objVol ** (1/3)
         self.objMass = self.objVol * self.objDen
         
         
@@ -15,7 +15,7 @@ class floatationSolver:
     def solve(self):
         forceGravity = self.gravity * self.objMass
         subVol = forceGravity / (self.fluidDen * self.gravity)
-        self.solvedMessage(self, subVol)
+        self.solvedMessage(subVol)
 
     def followUpMenu(self):
         print("\nChange parameter?")
@@ -56,6 +56,7 @@ class floatationSolver:
         if(subVol >= self.objVol):
             print("The object would sink")
         else:
+            
             # submerged volume = area * submerged distance
             area = self.objSide * self.objSide
             subDist = subVol / area
@@ -64,7 +65,7 @@ class floatationSolver:
             centerDist = self.objSide / 2
             
             # output is distance from center. Positive means center is above, negative means it is below
-            subDist = centerDist = subDist
+            subDist = centerDist - subDist
             if(subDist >= 0):
                 print("The object would float, with the center ", subDist, " meters above water")
             else:
